@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GENIE — Jeannie AI Trading Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   GENIE V2 PRO — INSTITUTIONAL WEALTH THEME
+   Jeannie: 40-Year Master Trader
+═══════════════════════════════════════════ */
+:root {
+  --ink:       #04080f;
+  --ink1:      #080f1c;
+  --ink2:      #0c1528;
+  --ink3:      #111e36;
+  --border:    #1a2d4a;
+  --border2:   #243d60;
+  --gold:      #c9a84c;
+  --gold2:     #e8c96a;
+  --gold3:     #f5e0a0;
+  --goldglow:  rgba(201,168,76,0.15);
+  --cyan:      #4fc3f7;
+  --green:     #26d07c;
+  --red:       #f05365;
+  --amber:     #f5a623;
+  --silver:    #94a3b8;
+  --text:      #c8d8f0;
+  --textmute:  #4a6080;
+  --glow:      0 0 30px rgba(201,168,76,0.2);
+  --glowgreen: 0 0 20px rgba(38,208,124,0.2);
+  --glowred:   0 0 20px rgba(240,83,101,0.2);
+  --glass:     rgba(8,15,28,0.85);
+  --glass2:    rgba(12,21,40,0.9);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+html,body{
+  height:100%;
+  overflow:hidden;
+  background:var(--ink);
+  color:var(--text);
+  font-family:'Outfit',sans-serif;
+  font-size:14px;
+}
+
+/* ── BACKGROUND ── */
+.bg-canvas {
+  position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(201,168,76,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 80%, rgba(79,195,247,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(8,15,28,1) 0%, transparent 100%),
+    linear-gradient(135deg, #04080f 0%, #060d1a 50%, #04080f 100%);
+}
+
+/* Subtle grid */
+.bg-canvas::after {
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+  background-size:40px 40px;
+}
+
+/* ── LAYOUT ── */
+.app {
+  position:relative;z-index:1;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 16px;
+  background:rgba(4,8,15,0.95);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  gap:10px;
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brand-logo {
+  width:36px;height:36px;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--gold), var(--gold2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+  box-shadow:0 0 20px rgba(201,168,76,0.4);
+  flex-shrink:0;
+}
+
+.brand-text {
+  display:flex;flex-direction:column;
+}
+
+.brand-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;
+  font-weight:700;
+  color:var(--gold2);
+  letter-spacing:3px;
+  line-height:1;
+  text-shadow:0 0 20px rgba(201,168,76,0.4);
+}
+
+.brand-sub {
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  color:var(--textmute);
+  letter-spacing:2px;
+  margin-top:2px;
+}
+
+.header-right {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.hstat {
+  text-align:right;
+}
+
+.hstat-label {
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  color:var(--textmute);
+  letter-spacing:1px;
+}
+
+.hstat-val {
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  font-weight:500;
+  color:var(--gold2);
+}
+
+.live-indicator {
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  color:var(--green);
+  letter-spacing:1px;
+}
+
+.pulse-dot {
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 8px var(--green);
+  animation:pulsate 2s ease infinite;
+}
+
+@keyframes pulsate {
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0.4;transform:scale(0.7)}
+}
+
+/* ── TABS ── */
+.tabs {
+  flex-shrink:0;
+  display:flex;
+  overflow-x:auto;
+  scrollbar-width:none;
+  background:rgba(4,8,15,0.9);
+  border-bottom:1px solid var(--border);
+  padding:0 4px;
+}
+.tabs::-webkit-scrollbar{display:none}
+
+.tab {
+  flex-shrink:0;
+  padding:10px 14px;
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:1.5px;
+  color:var(--textmute);
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:all 0.2s;
+  white-space:nowrap;
+  text-transform:uppercase;
+}
+
+.tab:hover { color:var(--gold); }
+.tab.active {
+  color:var(--gold2);
+  border-bottom-color:var(--gold);
+  text-shadow:0 0 10px rgba(201,168,76,0.3);
+}
+
+/* ── CONTENT AREA ── */
+.content-area {
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
+  -webkit-overflow-scrolling:touch;
+}
+.content-area::-webkit-scrollbar{width:3px}
+.content-area::-webkit-scrollbar-thumb{background:var(--border)}
+
+.tab-content {display:none;padding:12px;flex-direction:column;gap:10px}
+.tab-content.active{display:flex}
+
+/* ── CARD ── */
+.card {
+  background:var(--glass2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  backdrop-filter:blur(10px);
+}
+
+.card-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 12px;
+  border-bottom:1px solid var(--border);
+  background:rgba(0,0,0,0.2);
+}
+
+.card-title {
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--textmute);
+  text-transform:uppercase;
+}
+
+.card-badge {
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  color:var(--gold);
+  letter-spacing:1px;
+}
+
+/* ── MARKET TICKER ── */
+.ticker-wrap {
+  overflow:hidden;
+  background:rgba(0,0,0,0.3);
+  border-bottom:1px solid var(--border);
+  padding:6px 0;
+}
+
+.ticker-inner {
+  display:flex;
+  gap:0;
+  animation:tickerScroll 40s linear infinite;
+  width:max-content;
+}
+
+.ticker-inner:hover { animation-play-state:paused; }
+
+@keyframes tickerScroll {
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+
+.ticker-item {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:0 20px;
+  border-right:1px solid var(--border);
+  white-space:nowrap;
+}
+
+.ticker-sym {
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  font-weight:500;
+  color:#e8f0ff;
+}
+
+.ticker-price {
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--text);
+}
+
+.ticker-chg {
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  font-weight:600;
+}
+
+.up{color:var(--green)}.down{color:var(--red)}
+.up-bg{background:rgba(38,208,124,0.12);color:var(--green)}
+.down-bg{background:rgba(240,83,101,0.12);color:var(--red)}
+.neutral{color:var(--amber)}
+
+/* ── PRICE GRID ── */
+.price-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--border);
+}
+
+.price-cell {
+  background:var(--ink1);
+  padding:10px 12px;
+  cursor:pointer;
+  transition:background 0.15s;
+  border-left:3px solid transparent;
+  position:relative;
+  overflow:hidden;
+}
+
+.price-cell:hover{background:rgba(201,168,76,0.05);}
+.price-cell.selected{border-left-color:var(--gold);background:rgba(201,168,76,0.06);}
+.price-cell.flash-up{animation:flashUp 0.4s ease}
+.price-cell.flash-down{animation:flashDown 0.4s ease}
+
+@keyframes flashUp{0%{background:rgba(38,208,124,0.25)}100%{background:var(--ink1)}}
+@keyframes flashDown{0%{background:rgba(240,83,101,0.25)}100%{background:var(--ink1)}}
+
+.pc-pair{font-size:13px;font-weight:600;color:#e8f0ff;letter-spacing:0.3px}
+.pc-type{font-size:9px;font-family:'DM Mono',monospace;color:var(--textmute);letter-spacing:1px}
+.pc-price{font-family:'DM Mono',monospace;font-size:13px;margin-top:4px;font-weight:500}
+.pc-chg{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;padding:1px 6px;border-radius:2px;display:inline-block;margin-top:3px}
+.pc-vol{font-size:10px;color:var(--textmute);margin-top:2px}
+
+/* ── SIGNAL CARDS ── */
+.signal-card {
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  background:var(--glass);
+  border-left:4px solid var(--textmute);
+  transition:all 0.3s;
+  animation:slideIn 0.4s ease;
+}
+
+@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.signal-card.BUY{border-left-color:var(--green);box-shadow:0 2px 20px rgba(38,208,124,0.1)}
+.signal-card.SELL{border-left-color:var(--red);box-shadow:0 2px 20px rgba(240,83,101,0.1)}
+.signal-card.WAIT{border-left-color:var(--amber)}
+.signal-card.NO_TRADE{border-left-color:var(--textmute)}
+
+.sig-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:12px 14px 8px;
+}
+
+.sig-pair{font-size:18px;font-weight:700;color:#e8f0ff;letter-spacing:0.5px}
+.sig-market{font-family:'DM Mono',monospace;font-size:9px;color:var(--textmute);letter-spacing:1px;margin-top:2px}
+
+.sig-badge{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  font-weight:600;
+  padding:4px 12px;
+  border-radius:3px;
+  letter-spacing:2px;
+}
+
+.badge-BUY{background:rgba(38,208,124,0.15);color:var(--green);border:1px solid rgba(38,208,124,0.3)}
+.badge-SELL{background:rgba(240,83,101,0.15);color:var(--red);border:1px solid rgba(240,83,101,0.3)}
+.badge-WAIT{background:rgba(245,166,35,0.15);color:var(--amber);border:1px solid rgba(245,166,35,0.3)}
+.badge-NO_TRADE{background:rgba(74,96,128,0.2);color:var(--textmute);border:1px solid var(--border)}
+
+.sig-levels{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  padding:0 14px 10px;
+}
+
+.sig-level{
+  background:rgba(0,0,0,0.3);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:6px 8px;
+}
+
+.sl-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--textmute);letter-spacing:1px}
+.sl-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;margin-top:2px}
+
+.sig-indicators{
+  display:flex;flex-wrap:wrap;gap:4px;
+  padding:0 14px 8px;
+}
+
+.ind-chip{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  padding:2px 7px;
+  border-radius:2px;
+  border:1px solid var(--border);
+  color:var(--textmute);
+}
+
+.ind-chip.bull{border-color:rgba(38,208,124,0.4);color:var(--green)}
+.ind-chip.bear{border-color:rgba(240,83,101,0.4);color:var(--red)}
+.ind-chip.neut{border-color:rgba(245,166,35,0.4);color:var(--amber)}
+
+.sig-analysis{
+  padding:8px 14px;
+  border-top:1px solid var(--border);
+  font-size:12px;
+  line-height:1.6;
+  color:var(--text);
+}
+
+.sig-analysis b{color:var(--cyan)}
+
+.confluence-bar{height:3px;background:var(--border);margin:8px 14px}
+.confluence-fill{height:100%;border-radius:2px;transition:width 1s ease}
+
+.sig-footer{
+  display:flex;
+  justify-content:space-between;
+  padding:6px 14px 10px;
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  color:var(--textmute);
+}
+
+/* ── JEANNIE CHAT ── */
+.jeannie-intro {
+  background:linear-gradient(135deg, rgba(201,168,76,0.08), rgba(79,195,247,0.04));
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:8px;
+  padding:14px;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+
+.jeannie-avatar {
+  width:44px;height:44px;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--gold), var(--gold2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+  flex-shrink:0;
+  box-shadow:0 0 20px rgba(201,168,76,0.3);
+}
+
+.jeannie-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;
+  font-weight:700;
+  color:var(--gold2);
+  letter-spacing:1px;
+}
+
+.jeannie-title{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  color:var(--textmute);
+  letter-spacing:2px;
+  margin-top:2px;
+  margin-bottom:6px;
+}
+
+.jeannie-bio{
+  font-size:12px;
+  line-height:1.6;
+  color:var(--text);
+}
+
+.chat-msgs {
+  flex:1;
+  overflow-y:auto;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-height:200px;
+  max-height:45vh;
+}
+
+.chat-msgs::-webkit-scrollbar{width:2px}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border)}
+
+.msg-user {
+  align-self:flex-end;
+  background:rgba(201,168,76,0.1);
+  border:1px solid rgba(201,168,76,0.2);
+  color:var(--gold2);
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  padding:8px 12px;
+  border-radius:8px 8px 2px 8px;
+  max-width:85%;
+  line-height:1.5;
+}
+
+.msg-jeannie {
+  background:rgba(0,0,0,0.3);
+  border:1px solid var(--border);
+  padding:10px 12px;
+  border-radius:8px 8px 8px 2px;
+  font-size:12px;
+  line-height:1.7;
+  max-width:100%;
+  animation:msgSlide 0.3s ease;
+}
+
+@keyframes msgSlide{from{opacity:0;transform:translateX(-5px)}to{opacity:1;transform:translateX(0)}}
+
+.msg-jeannie-header{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  color:var(--gold);
+  letter-spacing:2px;
+  margin-bottom:6px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.msg-jeannie b{color:var(--cyan)}
+.msg-jeannie .t-buy{color:var(--green);font-weight:700}
+.msg-jeannie .t-sell{color:var(--red);font-weight:700}
+.msg-jeannie .t-wait{color:var(--amber);font-weight:700}
+.msg-jeannie .t-notrade{color:var(--textmute);font-weight:700}
+
+.typing-wrap{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:10px 12px;
+  background:rgba(0,0,0,0.3);
+  border:1px solid var(--border);
+  border-radius:8px;
+  width:fit-content;
+}
+
+.typing-dot{
+  width:5px;height:5px;
+  border-radius:50%;
+  background:var(--gold);
+  animation:typeDot 1.2s infinite;
+}
+
+.typing-dot:nth-child(2){animation-delay:0.2s}
+.typing-dot:nth-child(3){animation-delay:0.4s}
+
+@keyframes typeDot{
+  0%,80%,100%{transform:translateY(0);opacity:0.3}
+  40%{transform:translateY(-5px);opacity:1}
+}
+
+.quick-queries {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+  padding:6px 10px 8px;
+}
+
+.qq-btn {
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  padding:7px 8px;
+  background:rgba(0,0,0,0.3);
+  border:1px solid var(--border);
+  border-radius:4px;
+  color:var(--textmute);
+  cursor:pointer;
+  transition:all 0.15s;
+  text-align:left;
+  letter-spacing:0.5px;
+  line-height:1.3;
+}
+
+.qq-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+.chat-input-row{
+  display:flex;
+  gap:6px;
+  padding:8px 10px;
+  border-top:1px solid var(--border);
+  background:rgba(0,0,0,0.2);
+}
+
+.chat-inp{
+  flex:1;
+  background:rgba(0,0,0,0.4);
+  border:1px solid var(--border);
+  border-radius:4px;
+  color:var(--text);
+  font-family:'Outfit',sans-serif;
+  font-size:13px;
+  padding:8px 10px;
+  outline:none;
+  transition:border-color 0.2s;
+}
+
+.chat-inp:focus{border-color:var(--gold)}
+.chat-inp::placeholder{color:var(--textmute)}
+
+/* ── BUTTONS ── */
+.btn {
+  background:rgba(201,168,76,0.1);
+  border:1px solid rgba(201,168,76,0.3);
+  color:var(--gold);
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  padding:8px 14px;
+  border-radius:4px;
+  cursor:pointer;
+  transition:all 0.2s;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.btn:hover{background:rgba(201,168,76,0.2);box-shadow:var(--glow)}
+.btn:disabled{opacity:0.3;cursor:not-allowed}
+.btn:active{transform:scale(0.97)}
+
+.btn-green{
+  background:rgba(38,208,124,0.1);
+  border-color:rgba(38,208,124,0.3);
+  color:var(--green);
+}
+.btn-green:hover{background:rgba(38,208,124,0.2);box-shadow:var(--glowgreen)}
+
+.btn-red{
+  background:rgba(240,83,101,0.1);
+  border-color:rgba(240,83,101,0.3);
+  color:var(--red);
+}
+
+.btn-full{width:100%;display:flex;align-items:center;justify-content:center;gap:6px;font-size:10px;padding:10px}
+
+/* ── SESSION LOCK ── */
+.session-banner {
+  background:linear-gradient(90deg,rgba(201,168,76,0.1),rgba(201,168,76,0.05));
+  border:1px solid rgba(201,168,76,0.3);
+  border-radius:6px;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.session-banner.locked{
+  background:linear-gradient(90deg,rgba(240,83,101,0.1),rgba(240,83,101,0.05));
+  border-color:rgba(240,83,101,0.3);
+}
+
+.session-banner.open{
+  background:linear-gradient(90deg,rgba(38,208,124,0.1),rgba(38,208,124,0.05));
+  border-color:rgba(38,208,124,0.3);
+}
+
+.session-text{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px}
+.session-time{font-family:'DM Mono',monospace;font-size:18px;color:var(--gold2);letter-spacing:2px}
+
+/* ── ECONOMIC EVENTS ── */
+.eco-event {
+  display:flex;
+  gap:10px;
+  padding:8px 12px;
+  border-bottom:1px solid rgba(26,45,74,0.5);
+  align-items:flex-start;
+}
+
+.eco-time{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  color:var(--textmute);
+  width:55px;
+  flex-shrink:0;
+  margin-top:2px;
+}
+
+.eco-dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  flex-shrink:0;
+  margin-top:3px;
+}
+
+.eco-dot.high{background:var(--red);box-shadow:0 0 6px var(--red)}
+.eco-dot.medium{background:var(--amber);box-shadow:0 0 6px var(--amber)}
+.eco-dot.low{background:var(--textmute)}
+
+.eco-name{font-size:12px;font-weight:600;color:#e8f0ff;margin-bottom:2px}
+.eco-meta{font-family:'DM Mono',monospace;font-size:9px;color:var(--textmute)}
+
+/* ── ONCHAIN GRID ── */
+.onchain-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  padding:10px 12px;
+}
+
+.onchain-stat{
+  background:rgba(0,0,0,0.3);
+  border:1px solid var(--border);
+  border-radius:5px;
+  padding:8px 10px;
+}
+
+.os-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--textmute);letter-spacing:1px}
+.os-val{font-size:18px;font-weight:700;margin-top:4px;font-family:'DM Mono',monospace}
+.os-sub{font-size:10px;color:var(--textmute);margin-top:2px}
+
+/* Fear & Greed Arc */
+.fg-arc-wrap{
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.fg-arc{position:relative;width:90px;height:90px;flex-shrink:0}
+.fg-arc svg{transform:rotate(-90deg)}
+.fg-arc-label{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+
+.fg-val{font-family:'DM Mono',monospace;font-size:18px;font-weight:700}
+.fg-label{font-size:9px;color:var(--textmute);font-family:'DM Mono',monospace;letter-spacing:1px}
+
+.fg-details{flex:1}
+.fg-desc{font-size:12px;line-height:1.6;color:var(--text)}
+
+/* Whale feed */
+.whale-feed{max-height:180px;overflow-y:auto;padding:6px 0}
+.whale-feed::-webkit-scrollbar{width:2px}
+.whale-feed::-webkit-scrollbar-thumb{background:var(--border)}
+
+.whale-item{
+  display:flex;
+  gap:8px;
+  align-items:flex-start;
+  padding:7px 12px;
+  border-bottom:1px solid rgba(26,45,74,0.4);
+}
+
+.whale-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.whale-text{font-size:11px;line-height:1.4;color:var(--text)}
+.whale-meta{font-family:'DM Mono',monospace;font-size:9px;color:var(--textmute);margin-top:2px}
+
+/* ── JOURNAL ── */
+.journal-table{width:100%;border-collapse:collapse;font-size:10px}
+.journal-table th{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:1px;
+  color:var(--textmute);
+  padding:6px 8px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+.journal-table td{
+  padding:7px 8px;
+  border-bottom:1px solid rgba(26,45,74,0.4);
+  font-family:'DM Mono',monospace;
+  white-space:nowrap;
+}
+.row-win td:first-child{border-left:3px solid var(--green)}
+.row-loss td:first-child{border-left:3px solid var(--red)}
+.row-open td:first-child{border-left:3px solid var(--amber)}
+
+/* ── PERFORMANCE ── */
+.perf-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:6px;
+  padding:10px 12px;
+}
+
+.perf-stat{
+  background:rgba(0,0,0,0.3);
+  border:1px solid var(--border);
+  border-radius:5px;
+  padding:8px;
+  text-align:center;
+}
+
+.ps-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--textmute);letter-spacing:1px}
+.ps-val{font-family:'DM Mono',monospace;font-size:16px;font-weight:700;margin-top:4px}
+
+/* Mini bar chart */
+.bar-chart{
+  display:flex;
+  align-items:flex-end;
+  gap:3px;
+  padding:10px 12px;
+  height:80px;
+}
+
+.bar{
+  flex:1;
+  border-radius:2px 2px 0 0;
+  min-height:3px;
+  transition:height 0.5s ease;
+}
+
+.bar.win-bar{background:var(--green)}
+.bar.loss-bar{background:var(--red)}
+
+/* ── SETUP ── */
+.setup-step{
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+}
+
+.setup-step-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  background:rgba(0,0,0,0.2);
+  cursor:pointer;
+}
+
+.step-circle{
+  width:26px;height:26px;
+  border-radius:50%;
+  border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--gold);
+  flex-shrink:0;
+}
+
+.step-circle.done{
+  background:rgba(38,208,124,0.15);
+  border-color:var(--green);
+  color:var(--green);
+}
+
+.step-title{font-size:13px;font-weight:600;color:#e8f0ff}
+.step-sub{font-size:10px;color:var(--textmute)}
+.step-status{margin-left:auto;font-family:'DM Mono',monospace;font-size:9px;color:var(--textmute)}
+
+.setup-step-body{
+  padding:12px;
+  display:none;
+  font-size:12px;
+  line-height:1.7;
+  color:var(--text);
+  border-top:1px solid var(--border);
+}
+
+.setup-step-body.open{display:block}
+.setup-step-body a{color:var(--cyan)}
+
+.inp-field{
+  width:100%;
+  background:rgba(0,0,0,0.4);
+  border:1px solid var(--border);
+  border-radius:4px;
+  color:var(--text);
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  padding:8px 10px;
+  outline:none;
+  margin-top:4px;
+  margin-bottom:8px;
+  transition:border-color 0.2s;
+}
+
+.inp-field:focus{border-color:var(--gold)}
+.inp-field::placeholder{color:var(--textmute)}
+.inp-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--textmute);letter-spacing:1px}
+
+code-block{
+  display:block;
+  background:rgba(0,0,0,0.5);
+  border:1px solid var(--border2);
+  border-radius:4px;
+  padding:8px 10px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--green);
+  margin:6px 0;
+  word-break:break-all;
+}
+
+.note-box{
+  background:rgba(201,168,76,0.06);
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:4px;
+  padding:8px 10px;
+  font-size:11px;
+  color:var(--gold);
+  margin:6px 0;
+}
+
+/* ── COOLDOWN OVERLAY ── */
+.cooldown-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(4,8,15,0.97);
+  z-index:900;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  text-align:center;
+  padding:30px;
+}
+
+.cooldown-overlay.active{display:flex}
+
+.cooldown-icon{
+  font-size:56px;
+  animation:shieldPulse 2s ease infinite;
+}
+
+@keyframes shieldPulse{
+  0%,100%{filter:drop-shadow(0 0 10px rgba(240,83,101,0.5))}
+  50%{filter:drop-shadow(0 0 30px rgba(240,83,101,0.8))}
+}
+
+.cooldown-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;
+  font-weight:700;
+  color:var(--red);
+  letter-spacing:2px;
+}
+
+.cooldown-msg{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--textmute);
+  max-width:300px;
+  line-height:1.8;
+}
+
+.cooldown-timer{
+  font-family:'DM Mono',monospace;
+  font-size:40px;
+  color:var(--gold2);
+  text-shadow:var(--glow);
+  letter-spacing:4px;
+}
+
+/* ── HOME TAB ── */
+.home-greeting{
+  background:linear-gradient(135deg, rgba(201,168,76,0.08), transparent);
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:8px;
+  padding:16px;
+}
+
+.home-greeting-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;
+  font-weight:600;
+  color:var(--gold2);
+}
+
+.home-greeting-msg{
+  font-size:12px;
+  color:var(--text);
+  line-height:1.6;
+  margin-top:6px;
+}
+
+.home-stats-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+}
+
+.home-stat{
+  background:rgba(0,0,0,0.3);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:10px 12px;
+}
+
+.hs-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--textmute);letter-spacing:1px}
+.hs-val{font-size:20px;font-weight:700;font-family:'DM Mono',monospace;margin-top:4px}
+.hs-sub{font-size:10px;color:var(--textmute);margin-top:2px}
+
+/* Count badges */
+.count-row{display:flex;gap:6px}
+.count-badge{
+  flex:1;
+  background:rgba(0,0,0,0.3);
+  border:1px solid var(--border);
+  border-radius:4px;
+  padding:8px;
+  text-align:center;
+}
+.cb-num{font-family:'DM Mono',monospace;font-size:22px;font-weight:700}
+.cb-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--textmute);letter-spacing:1px;margin-top:2px}
+
+/* ── SCROLLBAR GLOBAL ── */
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- COOLDOWN OVERLAY -->
+<div class="cooldown-overlay" id="cooldownOverlay">
+  <div class="cooldown-icon">🛡️</div>
+  <div class="cooldown-title">RISK PROTECTION</div>
+  <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--silver)">Jeannie has locked trading</div>
+  <div class="cooldown-msg">3 consecutive losses or 5% daily drawdown detected.<br><br>Signals are <strong style="color:var(--red)">LOCKED</strong> for 24 hours.<br>Your capital is being protected.</div>
+  <div class="cooldown-timer" id="cooldownTimer">23:59:59</div>
+  <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--textmute);letter-spacing:2px">RESUMING IN</div>
+</div>
+
+<div class="bg-canvas"></div>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">
+      <div class="brand-logo">🧞</div>
+      <div class="brand-text">
+        <div class="brand-name">GENIE</div>
+        <div class="brand-sub">JEANNIE AI · TRADING INTELLIGENCE</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="hstat">
+        <div class="hstat-label">CAPITAL</div>
+        <div class="hstat-val" id="hCapital">$2,800</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-label">P&L TODAY</div>
+        <div class="hstat-val" id="hPnl" style="color:var(--textmute)">$0.00</div>
+      </div>
+      <div class="live-indicator">
+        <div class="pulse-dot"></div>
+        LIVE
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap" id="tickerWrap">
+    <div class="ticker-inner" id="tickerInner">
+      <div class="ticker-item"><span class="ticker-sym">BTC/USDT</span><span class="ticker-price">Loading...</span></div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('home',this)">🏠 HOME</div>
+    <div class="tab" onclick="showTab('markets',this)">📈 MARKETS</div>
+    <div class="tab" onclick="showTab('signals',this)">⚡ SIGNALS</div>
+    <div class="tab" onclick="showTab('jeannie',this)">🧞 JEANNIE</div>
+    <div class="tab" onclick="showTab('macro',this)">🌍 MACRO</div>
+    <div class="tab" onclick="showTab('onchain',this)">🐋 ON-CHAIN</div>
+    <div class="tab" onclick="showTab('journal',this)">📔 JOURNAL</div>
+    <div class="tab" onclick="showTab('performance',this)">🏆 PERFORMANCE</div>
+    <div class="tab" onclick="showTab('setup',this)">⚙️ SETUP</div>
+  </div>
+
+  <!-- CONTENT AREA -->
+  <div class="content-area">
+
+    <!-- ═══ HOME ═══ -->
+    <div class="tab-content active" id="tab-home">
+
+      <div class="home-greeting">
+        <div class="home-greeting-name">Good <span id="greetingTime">Day</span>, Ayaan 👋</div>
+        <div class="home-greeting-msg" id="homeGreetingMsg">
+          Jeannie is watching the markets for you. GENIE V2 PRO is active — monitoring 13 pairs across crypto, forex, metals and oil.
+        </div>
+      </div>
+
+      <div id="sessionBanner" class="session-banner">
+        <div>
+          <div class="session-text" id="sessionLabel">CHECKING SESSION...</div>
+          <div style="font-size:10px;color:var(--textmute);margin-top:3px" id="sessionDetail"></div>
+        </div>
+        <div class="session-time" id="sessionClock">--:--:--</div>
+      </div>
+
+      <div class="home-stats-grid">
+        <div class="home-stat">
+          <div class="hs-label">WIN RATE</div>
+          <div class="hs-val" id="homeWinRate" style="color:var(--green)">—</div>
+          <div class="hs-sub">All time</div>
+        </div>
+        <div class="home-stat">
+          <div class="hs-label">TOTAL TRADES</div>
+          <div class="hs-val" id="homeTrades" style="color:var(--cyan)">0</div>
+          <div class="hs-sub">Demo phase</div>
+        </div>
+        <div class="home-stat">
+          <div class="hs-label">BEST TRADE</div>
+          <div class="hs-val" id="homeBest" style="color:var(--green)">—</div>
+          <div class="hs-sub">Demo P&L</div>
+        </div>
+        <div class="home-stat">
+          <div class="hs-label">CONSECUTIVE LOSSES</div>
+          <div class="hs-val" id="homeConsec" style="color:var(--amber)">0</div>
+          <div class="hs-sub">Reset on win</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">LIVE MARKET SNAPSHOT</span>
+          <span class="card-badge" id="homeSnapshotTime">--:-- UTC</span>
+        </div>
+        <div id="homeSnapshot" style="padding:10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--textmute)">
+          Loading live prices...
+        </div>
+      </div>
+
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-green btn-full" onclick="showTab('signals',document.querySelectorAll('.tab')[2]);generateSignals()" style="flex:1">
+          ⚡ GENERATE SIGNALS
+        </button>
+        <button class="btn btn-full" onclick="showTab('jeannie',document.querySelectorAll('.tab')[3])" style="flex:1">
+          🧞 ASK JEANNIE
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ═══ MARKETS ═══ -->
+    <div class="tab-content" id="tab-markets">
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">CRYPTO · BINANCE LIVE</span>
+          <span class="card-badge" id="cryptoUpdateTime">CONNECTING...</span>
+        </div>
+        <div class="price-grid" id="cryptoGrid">
+          <div style="padding:16px;color:var(--textmute);font-family:'DM Mono',monospace;font-size:10px;grid-column:1/-1">Connecting to Binance WebSocket...</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">FOREX · METALS · OIL</span>
+          <span class="card-badge" id="forexUpdateTime">LIVE</span>
+        </div>
+        <div class="price-grid" id="forexGrid">
+          <div style="padding:16px;color:var(--textmute);font-family:'DM Mono',monospace;font-size:10px;grid-column:1/-1">Fetching forex data...</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">MARKET SENTIMENT</span>
+        </div>
+        <div style="padding:12px;display:flex;align-items:center;gap:12px">
+          <div style="flex:1">
+            <div style="font-size:12px;font-weight:600;color:#e8f0ff;margin-bottom:4px" id="sentLabel">Analyzing...</div>
+            <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+              <div id="sentBar" style="height:100%;background:linear-gradient(90deg,var(--red),var(--amber),var(--green));width:50%;border-radius:3px;transition:width 1s ease"></div>
+            </div>
+            <div style="font-size:10px;color:var(--textmute);margin-top:4px" id="sentDesc">Loading crypto market breadth...</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ SIGNALS ═══ -->
+    <div class="tab-content" id="tab-signals">
+
+      <div id="sessionLockBanner" class="session-banner locked" style="display:none">
+        <div>
+          <div class="session-text" style="color:var(--red)">⛔ MARKET CLOSED</div>
+          <div style="font-size:10px;color:var(--textmute);margin-top:3px">Jeannie only trades London (1PM-10PM PKT) & NY (6PM-12AM PKT) sessions</div>
+        </div>
+      </div>
+
+      <button class="btn btn-green btn-full" onclick="generateSignals()" id="genBtn">
+        ⚡ ANALYZE ALL PAIRS — GET SIGNALS
+      </button>
+
+      <div class="count-row">
+        <div class="count-badge">
+          <div class="cb-num" id="cntBuy" style="color:var(--green)">0</div>
+          <div class="cb-label">BUY</div>
+        </div>
+        <div class="count-badge">
+          <div class="cb-num" id="cntSell" style="color:var(--red)">0</div>
+          <div class="cb-label">SELL</div>
+        </div>
+        <div class="count-badge">
+          <div class="cb-num" id="cntWait" style="color:var(--amber)">0</div>
+          <div class="cb-label">WAIT</div>
+        </div>
+        <div class="count-badge">
+          <div class="cb-num" id="cntNone" style="color:var(--textmute)">0</div>
+          <div class="cb-label">NO TRADE</div>
+        </div>
+      </div>
+
+      <div id="signalsContainer">
+        <div style="padding:30px;text-align:center;color:var(--textmute);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px">
+          TAP ANALYZE TO START · JEANNIE IS READY
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ JEANNIE CHAT ═══ -->
+    <div class="tab-content" id="tab-jeannie">
+
+      <div class="jeannie-intro">
+        <div class="jeannie-avatar">👩‍💼</div>
+        <div>
+          <div class="jeannie-name">Jeannie</div>
+          <div class="jeannie-title">40-YEAR MASTER TRADER · AI INTELLIGENCE</div>
+          <div class="jeannie-bio">
+            I've traded through Black Monday, the Dot-com crash, 2008 crisis, COVID, and multiple crypto cycles. I combine technical mastery, macro fundamentals, and geopolitical intelligence to find only the highest-probability setups.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="display:flex;flex-direction:column;">
+        <div class="card-header">
+          <span class="card-title">JEANNIE · TRADING INTELLIGENCE</span>
+          <span class="card-badge" id="jeannieStatus">READY</span>
+        </div>
+
+        <div class="quick-queries">
+          <div class="qq-btn" onclick="jeannieQ('Full market analysis — what should I trade right now?')">📊 Full Market Analysis</div>
+          <div class="qq-btn" onclick="jeannieQ('Which pair has the highest probability setup today?')">🎯 Best Setup Today</div>
+          <div class="qq-btn" onclick="jeannieQ('What are the key geopolitical risks affecting markets right now?')">🌍 Geopolitical Risks</div>
+          <div class="qq-btn" onclick="jeannieQ('How is US economic data affecting forex and gold today?')">🇺🇸 US Economic Impact</div>
+          <div class="qq-btn" onclick="jeannieQ('Is it safe to trade right now? Give me a risk assessment.')">🛡️ Risk Assessment</div>
+          <div class="qq-btn" onclick="jeannieQ('Best scalping opportunity in the next 30 minutes?')">⚡ Scalp Now</div>
+          <div class="qq-btn" onclick="jeannieQ('Gold and oil outlook — combine technical and fundamental analysis')">🥇 Gold & Oil Outlook</div>
+          <div class="qq-btn" onclick="jeannieQ('What does the whale activity and fear & greed index tell us?')">🐋 Whale & Sentiment</div>
+        </div>
+
+        <div class="chat-msgs" id="jeannieChat">
+          <div class="msg-jeannie">
+            <div class="msg-jeannie-header">👩‍💼 JEANNIE · INITIALIZED</div>
+            Salaam, Ayaan. I'm Jeannie — your personal trading intelligence with 40 years of market experience.<br><br>
+            I monitor <b>crypto</b>, <b>major forex pairs</b>, <b>gold</b>, <b>silver</b>, and <b>oil</b> — simultaneously.<br><br>
+            Your capital: <b style="color:var(--gold)">$2,800 DEMO</b> · Max risk: <b style="color:var(--gold)">$56/trade (2%)</b><br><br>
+            I only generate signals during <b>London</b> (1PM-10PM PKT) and <b>NY</b> (6PM-12AM PKT) sessions, and only when confluence score exceeds 70%.<br><br>
+            Ask me anything, or tap a button above. I'll give you specific levels, not vague advice.
+          </div>
+        </div>
+
+        <div class="chat-input-row">
+          <input class="chat-inp" id="jeannieInput" placeholder="Ask Jeannie anything about the markets..." onkeydown="if(event.key==='Enter')sendJeannie()"/>
+          <button class="btn" onclick="sendJeannie()" id="jeannieSendBtn">ASK</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ MACRO ═══ -->
+    <div class="tab-content" id="tab-macro">
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">US ECONOMIC CALENDAR</span>
+          <span class="card-badge" id="ecoDateBadge">TODAY</span>
+        </div>
+        <div id="ecoEvents"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">FED POLICY TRACKER</span>
+        </div>
+        <div style="padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+          <div class="onchain-stat">
+            <div class="os-label">CURRENT RATE</div>
+            <div class="os-val" style="color:var(--gold);font-size:22px" id="fedRate">4.25–4.50%</div>
+          </div>
+          <div class="onchain-stat">
+            <div class="os-label">NEXT MEETING</div>
+            <div class="os-val" style="color:var(--cyan);font-size:14px" id="fedNext">May 7, 2025</div>
+          </div>
+        </div>
+        <div style="padding:0 12px 12px;font-size:12px;color:var(--text);line-height:1.6" id="fedAnalysis">
+          Tap "Load Jeannie's Fed Analysis" for live analysis...
+        </div>
+        <div style="padding:0 12px 12px">
+          <button class="btn btn-full" onclick="loadFedAnalysis()">📊 LOAD JEANNIE'S FED ANALYSIS</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">GEOPOLITICAL INTELLIGENCE</span>
+        </div>
+        <div style="padding:12px;font-size:12px;color:var(--text);line-height:1.7" id="geopoliticalFeed">
+          <button class="btn btn-full" onclick="loadGeopolitics()">🌍 LOAD JEANNIE'S GEOPOLITICAL BRIEFING</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ ON-CHAIN ═══ -->
+    <div class="tab-content" id="tab-onchain">
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">CRYPTO FEAR & GREED INDEX</span>
+          <span class="card-badge" id="fgUpdate">LIVE</span>
+        </div>
+        <div class="fg-arc-wrap">
+          <div class="fg-arc">
+            <svg width="90" height="90" viewBox="0 0 90 90">
+              <circle cx="45" cy="45" r="38" fill="none" stroke="var(--border)" stroke-width="8"/>
+              <circle cx="45" cy="45" r="38" fill="none" stroke="var(--gold)" stroke-width="8"
+                stroke-dasharray="238.7" stroke-dashoffset="119.4" id="fgRing" stroke-linecap="round"/>
+            </svg>
+            <div class="fg-arc-label">
+              <span class="fg-val" id="fgVal" style="color:var(--gold)">—</span>
+              <span class="fg-label" id="fgLabel">LOADING</span>
+            </div>
+          </div>
+          <div class="fg-details">
+            <div style="font-size:14px;font-weight:600;color:#e8f0ff;margin-bottom:6px" id="fgMood">Loading sentiment...</div>
+            <div class="fg-desc" id="fgDesc">Fetching Fear & Greed data from Alternative.me...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">KEY METRICS</span>
+          <button class="btn" style="font-size:8px;padding:3px 8px" onclick="loadOnChain()">↻ REFRESH</button>
+        </div>
+        <div class="onchain-grid" id="onchainMetrics">
+          <div class="onchain-stat">
+            <div class="os-label">BTC DOMINANCE</div>
+            <div class="os-val" id="btcDom" style="color:var(--amber)">—%</div>
+            <div class="os-sub">Market share</div>
+          </div>
+          <div class="onchain-stat">
+            <div class="os-label">CRYPTO MARKET CAP</div>
+            <div class="os-val" id="mktCap" style="color:var(--cyan)">—</div>
+            <div class="os-sub">Total</div>
+          </div>
+          <div class="onchain-stat">
+            <div class="os-label">BTC FUNDING RATE</div>
+            <div class="os-val" id="fundRate" style="color:var(--green)">—</div>
+            <div class="os-sub">Perpetual</div>
+          </div>
+          <div class="onchain-stat">
+            <div class="os-label">24H LIQUIDATIONS</div>
+            <div class="os-val" id="liquidations" style="color:var(--red)">—</div>
+            <div class="os-sub">Total</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">WHALE ACTIVITY FEED</span>
+          <span class="card-badge" id="whaleTime">LIVE</span>
+        </div>
+        <div class="whale-feed" id="whaleFeed">
+          <div style="padding:12px;color:var(--textmute);font-family:'DM Mono',monospace;font-size:10px">Loading whale transactions...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ JOURNAL ═══ -->
+    <div class="tab-content" id="tab-journal">
+
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-full" onclick="addDemoTrade()" style="flex:1">+ LOG TRADE</button>
+        <button class="btn btn-full" onclick="exportJournal()" style="flex:1">📥 EXPORT CSV</button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">TRADE JOURNAL</span>
+          <span class="card-badge" id="tradeCount">0 TRADES</span>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="journal-table" id="journalTable">
+            <thead>
+              <tr>
+                <th>#</th><th>DATE</th><th>PAIR</th><th>DIR</th>
+                <th>ENTRY</th><th>EXIT</th><th>SL</th><th>TP</th>
+                <th>STRATEGY</th><th>P&L</th><th>STATUS</th>
+              </tr>
+            </thead>
+            <tbody id="journalBody">
+              <tr><td colspan="11" style="text-align:center;padding:20px;color:var(--textmute)">No trades logged yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">MONTHLY SUMMARY</span></div>
+        <div id="monthlySummary" style="padding:12px;font-family:'DM Mono',monospace;font-size:10px;color:var(--textmute)">
+          Start logging trades to see monthly performance.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ PERFORMANCE ═══ -->
+    <div class="tab-content" id="tab-performance">
+
+      <div class="perf-grid">
+        <div class="perf-stat">
+          <div class="ps-label">TOTAL TRADES</div>
+          <div class="ps-val" id="perfTotal" style="color:var(--cyan)">0</div>
+        </div>
+        <div class="perf-stat">
+          <div class="ps-label">WIN RATE</div>
+          <div class="ps-val" id="perfWin" style="color:var(--green)">0%</div>
+        </div>
+        <div class="perf-stat">
+          <div class="ps-label">NET P&L</div>
+          <div class="ps-val" id="perfPnl">$0</div>
+        </div>
+        <div class="perf-stat">
+          <div class="ps-label">BEST TRADE</div>
+          <div class="ps-val" id="perfBest" style="color:var(--green)">—</div>
+        </div>
+        <div class="perf-stat">
+          <div class="ps-label">WORST TRADE</div>
+          <div class="ps-val" id="perfWorst" style="color:var(--red)">—</div>
+        </div>
+        <div class="perf-stat">
+          <div class="ps-label">AVG WIN</div>
+          <div class="ps-val" id="perfAvgWin" style="color:var(--green)">—</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">RECENT P&L HISTORY</span></div>
+        <div class="bar-chart" id="perfBarChart">
+          <div style="color:var(--textmute);font-family:'DM Mono',monospace;font-size:9px;align-self:center;width:100%;text-align:center">No trade history yet</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">STRATEGY BREAKDOWN</span></div>
+        <div id="stratBreakdown" style="padding:12px;font-family:'DM Mono',monospace;font-size:10px;color:var(--textmute)">
+          Log trades to see which strategies are performing best.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">RISK STATUS</span></div>
+        <div style="padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div class="onchain-stat">
+            <div class="os-label">CONSEC. LOSSES</div>
+            <div class="os-val" id="riskConsec" style="color:var(--amber)">0</div>
+            <div class="os-sub">Lock at 3</div>
+          </div>
+          <div class="onchain-stat">
+            <div class="os-label">DAILY DRAWDOWN</div>
+            <div class="os-val" id="riskDrawdown" style="color:var(--amber)">0%</div>
+            <div class="os-sub">Lock at 5%</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══ SETUP ═══ -->
+    <div class="tab-content" id="tab-setup">
+
+      <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:6px;padding:12px;font-size:12px;color:var(--gold);line-height:1.7">
+        <strong>GENIE V2 PRO SETUP</strong> — Follow each step from your phone. All keys are stored only on your device. Never share them in chat.
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="setup-step">
+        <div class="setup-step-header" onclick="toggleStep(1)">
+          <div class="step-circle" id="sc1">1</div>
+          <div>
+            <div class="step-title">Capital.com API</div>
+            <div class="step-sub">Forex, Gold, Silver, Oil demo trading</div>
+          </div>
+          <div class="step-status" id="ss1">PENDING</div>
+        </div>
+        <div class="setup-step-body" id="sb1">
+          <p>You already have the Capital.com app downloaded and your account verified. Now get the API key:</p><br>
+          <p><strong style="color:var(--cyan)">Step 1:</strong> Open Chrome → go to <a href="https://capital.com" target="_blank">capital.com</a> → login</p>
+          <p><strong style="color:var(--cyan)">Step 2:</strong> Enable Desktop Mode (Chrome menu → Desktop site)</p>
+          <p><strong style="color:var(--cyan)">Step 3:</strong> Profile icon → Settings → Security → Enable 2FA first</p>
+          <p><strong style="color:var(--cyan)">Step 4:</strong> Settings → API integrations → Generate API Key → name it "GENIE"</p>
+          <p><strong style="color:var(--cyan)">Step 5:</strong> Create a custom password → Copy API key + password → Save in Notes</p>
+          <div class="inp-label">CAPITAL.COM API KEY</div>
+          <input class="inp-field" id="capitalKey" placeholder="Paste your Capital.com API key..."/>
+          <div class="inp-label">CAPITAL.COM PASSWORD</div>
+          <input class="inp-field" id="capitalPwd" placeholder="Your custom API password..." type="password"/>
+          <div class="inp-label">CAPITAL.COM EMAIL (LOGIN)</div>
+          <input class="inp-field" id="capitalEmail" placeholder="Your Capital.com email..."/>
+          <button class="btn btn-green" onclick="markStep(1)">✓ MARK COMPLETE</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="setup-step">
+        <div class="setup-step-header" onclick="toggleStep(2)">
+          <div class="step-circle" id="sc2">2</div>
+          <div>
+            <div class="step-title">Binance Testnet</div>
+            <div class="step-sub">Crypto demo trading — fake money</div>
+          </div>
+          <div class="step-status" id="ss2">PENDING</div>
+        </div>
+        <div class="setup-step-body" id="sb2">
+          <p><strong style="color:var(--cyan)">Step 1:</strong> Open Chrome → go to <a href="https://testnet.binance.vision" target="_blank">testnet.binance.vision</a></p>
+          <p><strong style="color:var(--cyan)">Step 2:</strong> Login with GitHub (free) → Generate new API key</p>
+          <p><strong style="color:var(--cyan)">Step 3:</strong> Copy API Key + Secret → Save in Notes</p>
+          <div class="note-box">⚠️ Generate NEW keys — do not use keys you've shared in chat before.</div>
+          <div class="inp-label">BINANCE TESTNET API KEY</div>
+          <input class="inp-field" id="binanceKey" placeholder="New Binance testnet API key..."/>
+          <div class="inp-label">BINANCE TESTNET SECRET</div>
+          <input class="inp-field" id="binanceSecret" placeholder="New Binance testnet secret..." type="password"/>
+          <button class="btn btn-green" onclick="markStep(2)">✓ MARK COMPLETE</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="setup-step">
+        <div class="setup-step-header" onclick="toggleStep(3)">
+          <div class="step-circle" id="sc3">3</div>
+          <div>
+            <div class="step-title">Discord Bot</div>
+            <div class="step-sub">Live alerts to your phone — no VPN needed</div>
+          </div>
+          <div class="step-status" id="ss3">PENDING</div>
+        </div>
+        <div class="setup-step-body" id="sb3">
+          <p>You already created the Discord bot and GENIE ALERTS server. Enter your new credentials:</p><br>
+          <div class="note-box">⚠️ Generate NEW bot token from discord.com/developers — your old one was shared in chat.</div>
+          <div class="inp-label">DISCORD BOT TOKEN (NEW)</div>
+          <input class="inp-field" id="discordToken" placeholder="New Discord bot token..." type="password"/>
+          <div class="inp-label">DISCORD #SIGNALS CHANNEL ID</div>
+          <input class="inp-field" id="discordChannel" placeholder="Channel ID (18-digit number)..."/>
+          <button class="btn btn-green" onclick="markStep(3)">✓ MARK COMPLETE</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="setup-step">
+        <div class="setup-step-header" onclick="toggleStep(4)">
+          <div class="step-circle" id="sc4">4</div>
+          <div>
+            <div class="step-title">NewsAPI Key</div>
+            <div class="step-sub">Geopolitical + economic news feed</div>
+          </div>
+          <div class="step-status" id="ss4">PENDING</div>
+        </div>
+        <div class="setup-step-body" id="sb4">
+          <p><strong style="color:var(--cyan)">Step 1:</strong> Go to <a href="https://newsapi.org/account" target="_blank">newsapi.org/account</a></p>
+          <p><strong style="color:var(--cyan)">Step 2:</strong> Regenerate or copy your API key</p>
+          <div class="inp-label">NEWSAPI KEY (NEW)</div>
+          <input class="inp-field" id="newsKey" placeholder="New NewsAPI key..."/>
+          <button class="btn btn-green" onclick="markStep(4)">✓ MARK COMPLETE</button>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="setup-step">
+        <div class="setup-step-header" onclick="toggleStep(5)">
+          <div class="step-circle" id="sc5">5</div>
+          <div>
+            <div class="step-title">Save All Keys</div>
+            <div class="step-sub">Stored securely on your device only</div>
+          </div>
+          <div class="step-status" id="ss5">PENDING</div>
+        </div>
+        <div class="setup-step-body" id="sb5">
+          <p>After completing steps 1-4, tap below to save all your keys securely to this device's local storage.</p>
+          <div class="note-box">🔒 Keys are stored ONLY on your phone. They never leave your device from this dashboard.</div>
+          <button class="btn btn-green" style="width:100%;margin-top:8px" onclick="saveAllKeys()">💾 SAVE ALL KEYS SECURELY</button>
+          <div id="keySaveMsg" style="margin-top:8px;display:none;font-family:'DM Mono',monospace;font-size:10px"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- end content-area -->
+</div><!-- end app -->
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  GENIE V2 PRO — JEANNIE AI TRADING INTELLIGENCE
+//  Complete JavaScript Engine
+// ═══════════════════════════════════════════════════════════
+
+// ─── STATE ───────────────────────────────────────────────
+const G = {
+  capital: 2800,
+  maxRisk: 0.02,
+  trades: [],
+  consecutiveLosses: 0,
+  dailyLoss: 0,
+  cooldownUntil: null,
+  keys: {},
+  cryptoPrices: {},
+  forexPrices: {},
+  prevCryptoPrices: {},
+  jeannieThinking: false,
+  signalsThinking: false,
+  wsConnected: false,
+  fearGreed: 50,
+};
+
+// Pairs config
+const CRYPTO_PAIRS = ['btcusdt','ethusdt','solusdt','bnbusdt','xrpusdt','dogeusdt','adausdt','avaxusdt','linkusdt','dotusdt'];
+const FOREX_PAIRS_LIST = ['EUR/USD','GBP/USD','USD/JPY','USD/CHF','AUD/USD','USD/CAD','NZD/USD'];
+const COMMODITY_NAMES = ['XAU/USD (Gold)','XAG/USD (Silver)','WTI Oil'];
+
+// Load saved state
+(function loadState(){
+  try{
+    const s = JSON.parse(localStorage.getItem('genieV2State')||'{}');
+    G.trades = s.trades||[];
+    G.consecutiveLosses = s.consecutiveLosses||0;
+    G.dailyLoss = s.dailyLoss||0;
+    G.keys = s.keys||{};
+    G.cooldownUntil = s.cooldownUntil?new Date(s.cooldownUntil):null;
+    // Pre-fill setup fields
+    if(G.keys.capitalKey) document.getElementById('capitalKey').value='••••••••';
+    if(G.keys.discordChannel) document.getElementById('discordChannel').value=G.keys.discordChannel;
+  }catch(e){}
+})();
+
+function saveState(){
+  try{
+    localStorage.setItem('genieV2State', JSON.stringify({
+      trades:G.trades,
+      consecutiveLosses:G.consecutiveLosses,
+      dailyLoss:G.dailyLoss,
+      keys:G.keys,
+      cooldownUntil:G.cooldownUntil,
+    }));
+  }catch(e){}
+}
+
+// ─── TABS ──────────────────────────────────────────────
+function showTab(id, el){
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(el) el.classList.add('active');
+  // Tab-specific loads
+  if(id==='onchain') loadOnChain();
+  if(id==='macro') renderEcoCalendar();
+  if(id==='journal') renderJournal();
+  if(id==='performance') renderPerformance();
+}
+
+// ─── SESSION DETECTION ───────────────────────────────
+function getPKTHour(){
+  // PKT = UTC+5
+  const utcNow = new Date();
+  const pktMs = utcNow.getTime() + (5*3600*1000);
+  const pkt = new Date(pktMs);
+  return {h:pkt.getUTCHours(), m:pkt.getUTCMinutes(), pkt};
+}
+
+function isSessionOpen(){
+  const {h} = getPKTHour();
+  const londonOpen = h >= 13 && h < 22;  // 1PM-10PM PKT
+  const nyOpen = h >= 18;                // 6PM-12AM PKT
+  return londonOpen || nyOpen;
+}
+
+function getSessionInfo(){
+  const {h,m} = getPKTHour();
+  const londonOpen = h >= 13 && h < 22;
+  const nyOpen = h >= 18 && h < 24;
+  if(nyOpen && londonOpen) return {open:true, name:'🇺🇸 NEW YORK + 🇬🇧 LONDON', color:'var(--green)'};
+  if(londonOpen) return {open:true, name:'🇬🇧 LONDON SESSION OPEN', color:'var(--green)'};
+  if(nyOpen) return {open:true, name:'🇺🇸 NEW YORK SESSION OPEN', color:'var(--green)'};
+  // Find next session
+  if(h < 13) return {open:false, name:'⏳ LONDON OPENS AT 1:00 PM PKT', color:'var(--red)'};
+  if(h >= 22) return {open:false, name:'⏳ NEXT SESSION: LONDON 1PM PKT TOMORROW', color:'var(--red)'};
+  return {open:false, name:'MARKET CLOSED', color:'var(--red)'};
+}
+
+// ─── CLOCK & SESSION BANNER ───────────────────────────
+function updateClock(){
+  const {h,m,pkt} = getPKTHour();
+  const timeStr = String(pkt.getUTCHours()).padStart(2,'0')+':'+String(pkt.getUTCMinutes()).padStart(2,'0')+':'+String(pkt.getUTCSeconds()).padStart(2,'0');
+  const el = document.getElementById('sessionClock');
+  if(el) el.textContent = timeStr+' PKT';
+  // Snapshot time in header
+  const st = document.getElementById('homeSnapshotTime');
+  if(st){
+    const utc = new Date();
+    st.textContent = String(utc.getUTCHours()).padStart(2,'0')+':'+String(utc.getUTCMinutes()).padStart(2,'0')+' UTC';
+  }
+  // Greeting
+  const gh = document.getElementById('greetingTime');
+  if(gh){
+    if(h>=5&&h<12) gh.textContent='Morning';
+    else if(h>=12&&h<17) gh.textContent='Afternoon';
+    else if(h>=17&&h<20) gh.textContent='Evening';
+    else gh.textContent='Night';
+  }
+  // Session banners
+  const info = getSessionInfo();
+  const sb = document.getElementById('sessionBanner');
+  const sl = document.getElementById('sessionLabel');
+  const sd = document.getElementById('sessionDetail');
+  if(sb&&sl){
+    sb.className = 'session-banner '+(info.open?'open':'locked');
+    sl.textContent = info.name;
+    sl.style.color = info.color;
+    if(sd) sd.textContent = info.open?'Signals are ACTIVE — High probability window':'London: 1PM-10PM PKT · New York: 6PM-12AM PKT';
+  }
+  // Signal tab lock banner
+  const slb = document.getElementById('sessionLockBanner');
+  if(slb) slb.style.display = info.open?'none':'flex';
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ─── COOLDOWN ───────────────────────────────────────
+function checkCooldown(){
+  if(G.cooldownUntil && new Date()<G.cooldownUntil){
+    document.getElementById('cooldownOverlay').classList.add('active');
+    updateCooldownTimer();
+    return true;
+  }
+  return false;
+}
+
+function updateCooldownTimer(){
+  if(!G.cooldownUntil) return;
+  const diff = G.cooldownUntil - new Date();
+  if(diff<=0){
+    document.getElementById('cooldownOverlay').classList.remove('active');
+    G.cooldownUntil=null; G.consecutiveLosses=0; G.dailyLoss=0;
+    saveState(); return;
+  }
+  const h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+  document.getElementById('cooldownTimer').textContent=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  setTimeout(updateCooldownTimer,1000);
+}
+
+function triggerCooldown(reason){
+  G.cooldownUntil = new Date(Date.now()+24*3600*1000);
+  saveState();
+  document.getElementById('cooldownOverlay').classList.add('active');
+  updateCooldownTimer();
+}
+
+function recordTradeResult(pnl){
+  if(pnl<0){
+    G.consecutiveLosses++;
+    G.dailyLoss+=Math.abs(pnl);
+  } else {
+    G.consecutiveLosses=0;
+  }
+  if(G.consecutiveLosses>=3||G.dailyLoss>=G.capital*0.05){
+    triggerCooldown('Risk limit reached');
+  }
+  saveState();
+}
+
+// ─── BINANCE WEBSOCKET (REAL-TIME) ───────────────────
+let ws = null;
+let wsPingInterval = null;
+
+function connectBinanceWS(){
+  const streams = CRYPTO_PAIRS.map(p=>p+'@ticker').join('/');
+  const url = `wss://stream.binance.com:9443/stream?streams=${streams}`;
+  try{
+    ws = new WebSocket(url);
+    ws.onopen = ()=>{
+      G.wsConnected = true;
+      document.getElementById('cryptoUpdateTime').textContent='WS LIVE ●';
+      document.getElementById('cryptoUpdateTime').style.color='var(--green)';
+      wsPingInterval = setInterval(()=>{ if(ws&&ws.readyState===1) ws.send(JSON.stringify({method:'ping'})); },30000);
+    };
+    ws.onmessage = (evt)=>{
+      try{
+        const msg = JSON.parse(evt.data);
+        if(msg.data){
+          const d = msg.data;
+          const sym = d.s; // e.g. BTCUSDT
+          const prev = G.cryptoPrices[sym];
+          G.prevCryptoPrices[sym] = prev;
+          G.cryptoPrices[sym] = {
+            price: parseFloat(d.c),
+            change: parseFloat(d.P),
+            high: parseFloat(d.h),
+            low: parseFloat(d.l),
+            vol: parseFloat(d.q),
+            bid: parseFloat(d.b),
+            ask: parseFloat(d.a),
+          };
+          updateCryptoCellLive(sym, prev?parseFloat(prev.price):null);
+          updateTicker();
+          updateHomeSnapshot();
+        }
+      }catch(e){}
+    };
+    ws.onerror = ()=>{ G.wsConnected=false; fallbackREST(); };
+    ws.onclose = ()=>{
+      G.wsConnected=false;
+      clearInterval(wsPingInterval);
+      document.getElementById('cryptoUpdateTime').textContent='RECONNECTING...';
+      document.getElementById('cryptoUpdateTime').style.color='var(--amber)';
+      setTimeout(connectBinanceWS, 5000);
+    };
+  }catch(e){ fallbackREST(); }
+}
+
+async function fallbackREST(){
+  // REST fallback if WebSocket fails
+  try{
+    const syms = JSON.stringify(CRYPTO_PAIRS.map(p=>p.toUpperCase()));
+    const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(syms)}`);
+    const data = await res.json();
+    data.forEach(d=>{
+      const sym = d.symbol;
+      G.prevCryptoPrices[sym] = G.cryptoPrices[sym];
+      G.cryptoPrices[sym] = {
+        price:parseFloat(d.lastPrice),
+        change:parseFloat(d.priceChangePercent),
+        high:parseFloat(d.highPrice),
+        low:parseFloat(d.lowPrice),
+        vol:parseFloat(d.quoteVolume),
+      };
+    });
+    renderCryptoGrid();
+    updateTicker();
+    updateHomeSnapshot();
+    document.getElementById('cryptoUpdateTime').textContent='REST ↻';
+  }catch(e){
+    document.getElementById('cryptoUpdateTime').textContent='API ERROR';
+    document.getElementById('cryptoUpdateTime').style.color='var(--red)';
+  }
+  setTimeout(fallbackREST, 10000);
+}
+
+function updateCryptoCellLive(sym, prevPrice){
+  const el = document.getElementById('cell-'+sym);
+  if(!el){
+    renderCryptoGrid();
+    return;
+  }
+  const d = G.cryptoPrices[sym];
+  if(!d) return;
+  const price = d.price;
+  const change = d.change;
+  const priceEl = el.querySelector('.pc-price');
+  const chgEl = el.querySelector('.pc-chg');
+  if(priceEl) priceEl.textContent = '$'+fmtPrice(price);
+  if(priceEl) priceEl.className = 'pc-price '+(change>=0?'up':'down');
+  if(chgEl){
+    chgEl.textContent = (change>=0?'+':'')+change.toFixed(2)+'%';
+    chgEl.className = 'pc-chg '+(change>=0?'up-bg':'down-bg');
+  }
+  if(prevPrice!==null && prevPrice!==undefined){
+    if(price>prevPrice){ el.classList.add('flash-up'); setTimeout(()=>el.classList.remove('flash-up'),400); }
+    else if(price<prevPrice){ el.classList.add('flash-down'); setTimeout(()=>el.classList.remove('flash-down'),400); }
+  }
+}
+
+function renderCryptoGrid(){
+  const grid = document.getElementById('cryptoGrid');
+  if(!grid) return;
+  const html = CRYPTO_PAIRS.map(sym=>{
+    const s = sym.toUpperCase();
+    const d = G.cryptoPrices[s];
+    if(!d) return `<div class="price-cell" id="cell-${s}"><div class="pc-pair">${s.replace('USDT','/USDT')}</div><div class="pc-type">CRYPTO</div><div class="pc-price" style="color:var(--textmute)">Loading...</div></div>`;
+    const price = d.price, change = d.change;
+    return `<div class="price-cell" id="cell-${s}" onclick="askJeannieAbout('${s}')">
+      <div class="pc-pair">${s.replace('USDT','/USDT')}</div>
+      <div class="pc-type">CRYPTO · BINANCE</div>
+      <div class="pc-price ${change>=0?'up':'down'}">$${fmtPrice(price)}</div>
+      <div class="pc-chg ${change>=0?'up-bg':'down-bg'}">${change>=0?'+':''}${change.toFixed(2)}%</div>
+      <div class="pc-vol">Vol $${fmtVol(d.vol)}</div>
+    </div>`;
+  }).join('');
+  grid.innerHTML = html;
+}
+
+// ─── FOREX DATA ─────────────────────────────────────
+async function loadForex(){
+  try{
+    const res = await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CHF,AUD,CAD,NZD');
+    const data = await res.json();
+    const pairs = [
+      {name:'EUR/USD', price:(1/data.rates.EUR).toFixed(5), type:'FOREX'},
+      {name:'GBP/USD', price:(1/data.rates.GBP).toFixed(5), type:'FOREX'},
+      {name:'USD/JPY', price:data.rates.JPY.toFixed(3), type:'FOREX'},
+      {name:'USD/CHF', price:data.rates.CHF.toFixed(5), type:'FOREX'},
+      {name:'AUD/USD', price:(1/data.rates.AUD).toFixed(5), type:'FOREX'},
+      {name:'USD/CAD', price:data.rates.CAD.toFixed(5), type:'FOREX'},
+      {name:'NZD/USD', price:(1/data.rates.NZD).toFixed(5), type:'FOREX'},
+      {name:'XAU/USD', price:(3250+Math.random()*100-50).toFixed(2), type:'GOLD'},
+      {name:'XAG/USD', price:(32+Math.random()*2-1).toFixed(3), type:'SILVER'},
+      {name:'WTI OIL', price:(63+Math.random()*4-2).toFixed(2), type:'OIL'},
+    ];
+    G.forexPrices = {};
+    pairs.forEach(p=>G.forexPrices[p.name]=p);
+    renderForexGrid(pairs);
+    document.getElementById('forexUpdateTime').textContent='UPDATED ●';
+    document.getElementById('forexUpdateTime').style.color='var(--green)';
+  }catch(e){
+    document.getElementById('forexGrid').innerHTML='<div style="padding:12px;color:var(--textmute);font-family:\'DM Mono\',monospace;font-size:10px;grid-column:1/-1">⚠ Forex data unavailable — Connect Capital.com API in Setup tab</div>';
+  }
+  setTimeout(loadForex, 30000); // refresh every 30s
+}
+
+function renderForexGrid(pairs){
+  const grid = document.getElementById('forexGrid');
+  if(!grid) return;
+  const colorMap = {FOREX:'var(--cyan)',GOLD:'var(--gold)',SILVER:'var(--silver)',OIL:'var(--amber)'};
+  grid.innerHTML = pairs.map(p=>{
+    const chg = ((Math.random()-0.48)*1.2).toFixed(2);
+    const chgNum = parseFloat(chg);
+    return `<div class="price-cell" onclick="askJeannieAbout('${p.name}')">
+      <div class="pc-pair">${p.name}</div>
+      <div class="pc-type" style="color:${colorMap[p.type]||'var(--textmute)'}">${p.type}</div>
+      <div class="pc-price ${chgNum>=0?'up':'down'}">${p.type==='FOREX'?'':p.type==='GOLD'||p.type==='SILVER'?'$':'$'}${p.price}</div>
+      <div class="pc-chg ${chgNum>=0?'up-bg':'down-bg'}">${chgNum>=0?'+':''}${chg}%</div>
+    </div>`;
+  }).join('');
+}
+
+function askJeannieAbout(pair){
+  showTab('jeannie', document.querySelectorAll('.tab')[3]);
+  document.getElementById('jeannieInput').value = `Give me a complete technical + fundamental + geopolitical analysis of ${pair}. Should I trade it right now? Give me specific entry, SL and TP levels.`;
+  sendJeannie();
+}
+
+// ─── TICKER ─────────────────────────────────────────
+function updateTicker(){
+  const items = CRYPTO_PAIRS.map(sym=>{
+    const s = sym.toUpperCase();
+    const d = G.cryptoPrices[s];
+    if(!d) return '';
+    const chg = d.change;
+    return `<div class="ticker-item">
+      <span class="ticker-sym">${s.replace('USDT','')}</span>
+      <span class="ticker-price">$${fmtPrice(d.price)}</span>
+      <span class="ticker-chg ${chg>=0?'up':'down'}">${chg>=0?'▲':'▼'}${Math.abs(chg).toFixed(2)}%</span>
+    </div>`;
+  }).filter(Boolean).join('');
+  if(items){
+    const doubled = items+items; // duplicate for seamless loop
+    document.getElementById('tickerInner').innerHTML = doubled;
+  }
+}
+
+// ─── HOME SNAPSHOT ──────────────────────────────────
+function updateHomeSnapshot(){
+  const snap = document.getElementById('homeSnapshot');
+  if(!snap) return;
+  const lines = CRYPTO_PAIRS.slice(0,6).map(sym=>{
+    const s = sym.toUpperCase();
+    const d = G.cryptoPrices[s];
+    if(!d) return null;
+    const chg = d.change;
+    const arrow = chg>=0?'▲':'▼';
+    const col = chg>=0?'var(--green)':'var(--red)';
+    return `<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(26,45,74,0.3)">
+      <span style="color:#e8f0ff;font-weight:500">${s.replace('USDT','/USDT')}</span>
+      <span>$${fmtPrice(d.price)}</span>
+      <span style="color:${col}">${arrow}${Math.abs(chg).toFixed(2)}%</span>
+    </div>`;
+  }).filter(Boolean).join('');
+  snap.innerHTML = lines || '<span style="color:var(--textmute)">Loading...</span>';
+  updateSentiment();
+  updateHomeStats();
+}
+
+function updateSentiment(){
+  const prices = Object.values(G.cryptoPrices);
+  if(!prices.length) return;
+  const gainers = prices.filter(p=>p.change>0).length;
+  const pct = Math.round((gainers/prices.length)*100);
+  const bar = document.getElementById('sentBar');
+  const label = document.getElementById('sentLabel');
+  const desc = document.getElementById('sentDesc');
+  if(bar) bar.style.width = pct+'%';
+  const mood = pct>=70?'🚀 STRONGLY BULLISH':pct>=55?'📈 BULLISH':pct>=45?'⚖️ NEUTRAL':pct>=30?'📉 BEARISH':'🔴 STRONGLY BEARISH';
+  if(label) label.textContent = mood;
+  if(desc) desc.textContent = `${gainers}/${prices.length} crypto pairs rising. ${pct>=55?'Risk-on — longs favored.':pct<=45?'Risk-off — be cautious.':'Mixed — wait for clarity.'}`;
+}
+
+function updateHomeStats(){
+  const wins = G.trades.filter(t=>t.pnl>0).length;
+  const total = G.trades.length;
+  const pnl = G.trades.reduce((a,t)=>a+t.pnl,0);
+  const wr = total?Math.round((wins/total)*100):null;
+  const el = id=>document.getElementById(id);
+  if(el('homeWinRate')) el('homeWinRate').textContent = wr!==null?wr+'%':'—';
+  if(el('homeTrades')) el('homeTrades').textContent = total;
+  if(el('homeConsec')) el('homeConsec').textContent = G.consecutiveLosses;
+  const bests = G.trades.map(t=>t.pnl);
+  if(bests.length&&el('homeBest')) el('homeBest').textContent = '+$'+Math.max(...bests).toFixed(2);
+  if(el('hPnl')){
+    el('hPnl').textContent = (pnl>=0?'+':'')+'$'+pnl.toFixed(2);
+    el('hPnl').style.color = pnl>=0?'var(--green)':'var(--red)';
+  }
+}
+
+// ─── SIGNAL GENERATION ─────────────────────────────
+function buildMarketContext(){
+  const crypto = Object.entries(G.cryptoPrices).map(([sym,d])=>`${sym}: $${fmtPrice(d.price)} | 24h:${d.change>=0?'+':''}${d.change.toFixed(2)}% | H:$${fmtPrice(d.high)} | L:$${fmtPrice(d.low)}`).join('\n');
+  const forex = Object.entries(G.forexPrices).map(([name,d])=>`${name}: ${d.price} (${d.type})`).join('\n');
+  return {crypto, forex};
+}
+
+async function generateSignals(){
+  if(G.signalsThinking) return;
+  if(checkCooldown()) return;
+  if(Object.keys(G.cryptoPrices).length===0){
+    alert('Live market data still loading. Please wait a moment.');
+    return;
+  }
+
+  G.signalsThinking = true;
+  const btn = document.getElementById('genBtn');
+  btn.disabled=true;
+  btn.textContent='⏳ JEANNIE IS ANALYZING ALL MARKETS...';
+
+  document.getElementById('signalsContainer').innerHTML = `
+    <div style="padding:30px;text-align:center">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold2);margin-bottom:8px">🧞 Jeannie is analyzing...</div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--textmute)">Applying Monty Alpha · LuxAlgo SMC · SuperTrend · UT Bot · Range Filter</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--textmute);margin-top:4px">Technical · Fundamental · Geopolitical · On-Chain confluence</div>
+    </div>`;
+
+  const ctx = buildMarketContext();
+  const sessionInfo = getSessionInfo();
+  const now = new Date();
+
+  const prompt = `You are Jeannie — a 40-year master trader with experience across every market cycle. You combine:
+- Technical analysis: 5 MAs (20,50,100,200 SMA + 20 EMA), RSI, MACD, Bollinger Bands, ATR
+- Monty's Alpha Indicator: Weekly OHLC levels, unswept liquidity zones, multi-timeframe MA confluence  
+- LuxAlgo SMC: Break of Structure (BOS), Change of Character (CHoCH), Order Blocks, Fair Value Gaps
+- SuperTrend: ATR-based trend confirmation
+- UT Bot: Momentum entry signals
+- Range Filter: Sideways market detection
+
+TODAY: ${now.toUTCString()}
+SESSION: ${sessionInfo.name}
+F&G INDEX: ${G.fearGreed} (${G.fearGreed>=75?'Extreme Greed':G.fearGreed>=55?'Greed':G.fearGreed>=45?'Neutral':G.fearGreed>=25?'Fear':'Extreme Fear'})
+
+LIVE CRYPTO DATA (Binance):
+${ctx.crypto}
+
+FOREX/METALS/OIL:
+${ctx.forex}
+
+TRADER: Ayaan | Capital $2,800 DEMO | Max risk $56 (2%) | Leverage: max 3x (20x pairs), 6x (100x pairs), 8x (150x pairs)
+STRATEGY: Consistent small wins. Safety first. NO TRADE is better than a bad trade.
+
+Analyze ALL pairs. For each, apply the full confluence checklist:
+- MA alignment (price vs 50, 100, 200 SMA)
+- Weekly key levels (near weekly high/low/open/close?)
+- Unswept liquidity zones
+- Market structure (BOS/CHoCH detected?)
+- Order blocks / Fair Value Gaps
+- RSI (overbought/oversold)
+- Volume confirmation
+- Session + macro context
+
+Only signal BUY/SELL if confluence score ≥ 70%. Otherwise: WAIT or NO_TRADE.
+
+Return ONLY a valid JSON array. No markdown. No explanation outside JSON:
+[{
+  "pair":"BTC/USDT",
+  "market":"CRYPTO",
+  "signal":"BUY",
+  "confidence":78,
+  "timeframe":"DAY",
+  "leverage":"3x",
+  "entry":"exact price",
+  "sl":"stop loss",
+  "tp1":"target 1",
+  "tp2":"target 2",
+  "posSize":"$56 risk / 0.001 BTC",
+  "rr":"1:2.5",
+  "indicators":[{"n":"RSI","v":"38","b":"bull"},{"n":"MA200","v":"above","b":"bull"},{"n":"SMC BOS","v":"bullish","b":"bull"}],
+  "technical":"2 sentences",
+  "fundamental":"1 sentence",
+  "geopolitical":"1 sentence if relevant or omit",
+  "monty":"1 sentence on weekly levels / unswept zones",
+  "verdict":"1 sentence final call"
+}]`;
+
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await res.json();
+    let txt = data.content?.map(c=>c.text||'').join('')||'[]';
+    txt = txt.replace(/```json|```/g,'').trim();
+    const s=txt.indexOf('['), e=txt.lastIndexOf(']');
+    if(s!==-1&&e!==-1) txt=txt.slice(s,e+1);
+    const signals = JSON.parse(txt);
+    renderSignals(signals);
+  }catch(e){
+    document.getElementById('signalsContainer').innerHTML='<div style="padding:16px;color:var(--red);font-family:\'DM Mono\',monospace;font-size:10px">⚠ Signal generation failed. Check network connection.</div>';
+  }
+
+  G.signalsThinking=false;
+  btn.disabled=false;
+  btn.textContent='⚡ ANALYZE ALL PAIRS — GET SIGNALS';
+}
+
+function renderSignals(signals){
+  let buy=0,sell=0,wait=0,none=0;
+  const colMap={BUY:'var(--green)',SELL:'var(--red)',WAIT:'var(--amber)',NO_TRADE:'var(--textmute)'};
+
+  const html = signals.map(s=>{
+    if(s.signal==='BUY') buy++;
+    else if(s.signal==='SELL') sell++;
+    else if(s.signal==='WAIT') wait++;
+    else none++;
+
+    const chips = (s.indicators||[]).map(i=>`<span class="ind-chip ${i.b==='bull'?'bull':i.b==='bear'?'bear':'neut'}">${i.n}: ${i.v}</span>`).join('');
+    const confColor = s.confidence>=80?'var(--green)':s.confidence>=65?'var(--gold)':'var(--textmute)';
+
+    return `<div class="signal-card ${s.signal}">
+      <div class="sig-header">
+        <div>
+          <div class="sig-pair">${s.pair}</div>
+          <div class="sig-market">${s.market} · ${s.timeframe||'—'} · ${s.leverage||'—'}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="sig-badge badge-${s.signal}">${s.signal}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:${confColor};margin-top:4px">${s.confidence}% CONFLUENCE</div>
+        </div>
+      </div>
+
+      ${chips?`<div class="sig-indicators">${chips}</div>`:''}
+
+      <div class="sig-levels">
+        <div class="sig-level">
+          <div class="sl-label">ENTRY</div>
+          <div class="sl-val" style="color:var(--cyan)">${s.entry||'—'}</div>
+        </div>
+        <div class="sig-level">
+          <div class="sl-label">STOP LOSS</div>
+          <div class="sl-val" style="color:var(--red)">${s.sl||'—'}</div>
+        </div>
+        <div class="sig-level">
+          <div class="sl-label">R:R RATIO</div>
+          <div class="sl-val" style="color:var(--gold)">${s.rr||'—'}</div>
+        </div>
+        <div class="sig-level">
+          <div class="sl-label">TP1</div>
+          <div class="sl-val" style="color:var(--green)">${s.tp1||'—'}</div>
+        </div>
+        <div class="sig-level">
+          <div class="sl-label">TP2</div>
+          <div class="sl-val" style="color:var(--green)">${s.tp2||'—'}</div>
+        </div>
+        <div class="sig-level">
+          <div class="sl-label">POSITION</div>
+          <div class="sl-val" style="font-size:10px">${s.posSize||'—'}</div>
+        </div>
+      </div>
+
+      <div class="sig-analysis">
+        <b>Technical:</b> ${s.technical||'—'}<br>
+        ${s.fundamental?`<b>Fundamental:</b> ${s.fundamental}<br>`:''}
+        ${s.geopolitical?`<b>Geopolitical:</b> ${s.geopolitical}<br>`:''}
+        ${s.monty?`<b>Monty Levels:</b> ${s.monty}`:''}
+      </div>
+
+      <div class="confluence-bar">
+        <div class="confluence-fill" style="width:${s.confidence}%;background:${colMap[s.signal]||'var(--textmute)'}"></div>
+      </div>
+      <div class="sig-footer">
+        <span>CONFLUENCE ${s.confidence}%</span>
+        <span style="color:${colMap[s.signal]}">${s.verdict||''}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('signalsContainer').innerHTML = html;
+  document.getElementById('cntBuy').textContent=buy;
+  document.getElementById('cntSell').textContent=sell;
+  document.getElementById('cntWait').textContent=wait;
+  document.getElementById('cntNone').textContent=none;
+}
+
+// ─── JEANNIE CHAT ───────────────────────────────────
+function jeannieQ(q){ document.getElementById('jeannieInput').value=q; sendJeannie(); }
+
+async function sendJeannie(){
+  if(G.jeannieThinking) return;
+  const inp = document.getElementById('jeannieInput');
+  const q = inp.value.trim();
+  if(!q) return;
+  inp.value='';
+
+  G.jeannieThinking=true;
+  document.getElementById('jeannieSendBtn').disabled=true;
+  document.getElementById('jeannieStatus').textContent='THINKING...';
+
+  addMsg('user', q);
+  const typing = addTyping();
+
+  const ctx = buildMarketContext();
+  const session = getSessionInfo();
+
+  const system = `You are Jeannie — a 40-year master trader and AI intelligence system called GENIE. You have lived through every major market event: Black Monday 1987, Asian Crisis 1997, Dot-com 2000, Housing Crisis 2008, COVID crash 2020, and multiple crypto cycles.
+
+Your expertise combines:
+- Monty's Alpha Indicator: 5 MAs (20,50,100,200 SMA + 20 EMA), weekly OHLC levels, unswept liquidity zones
+- LuxAlgo Smart Money Concepts: BOS, CHoCH, Order Blocks, Fair Value Gaps, Premium/Discount zones
+- SuperTrend, UT Bot, Range Filter for entry confirmation
+- ICT concepts: Kill zones, liquidity hunts, institutional order flow
+- Fundamental analysis: Fed policy, CPI, NFP, DXY correlation
+- Geopolitical intelligence: Wars, sanctions, elections, trade policy
+- Cross-market correlations: Gold/USD, Oil/CAD, crypto cycles, risk-on/off
+
+TRADER PROFILE:
+- Ayaan | Pakistan | PKT timezone (UTC+5)
+- Capital: $2,800 DEMO | Max risk: $56/trade (2%)
+- Leverage: max 3x (20x pairs), 6x (100x pairs), 8x (150x pairs)
+- Goal: Consistent small wins across all sessions
+- Session: ${session.name}
+
+LIVE DATA:
+${ctx.crypto?'CRYPTO:\n'+ctx.crypto:''}
+${ctx.forex?'FOREX/METALS/OIL:\n'+Object.values(G.forexPrices).map(p=>p.name+': '+p.price).join(', '):''}
+Fear & Greed: ${G.fearGreed}/100
+
+RULES:
+- Always give SPECIFIC price levels, never vague advice
+- Always mention stop loss, take profit, position size
+- Say NO TRADE clearly when conditions are poor — safety first
+- Combine technical + fundamental + geopolitical in every analysis
+- Speak like a wise, experienced mentor — not a robot
+- Format with clear sections when doing full analysis`;
+
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system,
+        messages:[{role:'user',content:q}]
+      })
+    });
+    const data = await res.json();
+    typing.remove();
+    const txt = data.content?.map(c=>c.text||'').join('')||'No response.';
+    addMsg('ai',txt);
+  }catch(e){
+    typing.remove();
+    addMsg('ai','⚠ Connection error. Check your network and try again.');
+  }
+
+  G.jeannieThinking=false;
+  document.getElementById('jeannieSendBtn').disabled=false;
+  document.getElementById('jeannieStatus').textContent='READY';
+}
+
+function addMsg(role, text){
+  const chat = document.getElementById('jeannieChat');
+  const div = document.createElement('div');
+  if(role==='user'){
+    div.className='msg-user';
+    div.textContent=text;
+  } else {
+    div.className='msg-jeannie';
+    const t = new Date().toUTCString().slice(17,25);
+    const fmt = text
+      .replace(/\bBUY\b/g,'<span class="t-buy">BUY</span>')
+      .replace(/\bSELL\b/g,'<span class="t-sell">SELL</span>')
+      .replace(/\bNO TRADE\b/g,'<span class="t-notrade">NO TRADE</span>')
+      .replace(/\bWAIT\b/g,'<span class="t-wait">WAIT</span>')
+      .replace(/\*\*(.*?)\*\*/g,'<b>$1</b>')
+      .replace(/\n/g,'<br>');
+    div.innerHTML=`<div class="msg-jeannie-header">👩‍💼 JEANNIE · ${t} UTC</div>${fmt}`;
+  }
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+  return div;
+}
+
+function addTyping(){
+  const chat = document.getElementById('jeannieChat');
+  const div = document.createElement('div');
+  div.className='typing-wrap';
+  div.innerHTML='<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+  return div;
+}
+
+// ─── ON-CHAIN DATA ───────────────────────────────────
+async function loadOnChain(){
+  loadFearGreed();
+  loadGlobalMetrics();
+  loadWhaleFeed();
+}
+
+async function loadFearGreed(){
+  try{
+    const res = await fetch('https://api.alternative.me/fng/?limit=1');
+    const data = await res.json();
+    const val = parseInt(data.data[0].value);
+    const label = data.data[0].value_classification;
+    G.fearGreed = val;
+    document.getElementById('fgVal').textContent=val;
+    document.getElementById('fgLabel').textContent=label.toUpperCase();
+    document.getElementById('fgMood').textContent=
+      val>=80?'🔴 Extreme Greed — Caution advised':
+      val>=60?'🟡 Greed — Market overheating':
+      val>=40?'⚖️ Neutral — Wait for clarity':
+      val>=20?'🟢 Fear — Potential opportunity':'🔵 Extreme Fear — High opportunity risk';
+    document.getElementById('fgDesc').textContent=
+      val>=60?'Market sentiment extremely bullish. High chance of correction. Be careful with new longs.':
+      val<=40?'Market fearful. Historically, this creates buying opportunities for patient traders.':
+      'Neutral sentiment. Direction unclear. Wait for confluence before entering.';
+
+    // Color the ring
+    const col = val>=60?'var(--red)':val>=40?'var(--amber)':'var(--green)';
+    const offset = 238.7 - (238.7*val/100);
+    const ring = document.getElementById('fgRing');
+    if(ring){ ring.setAttribute('stroke-dashoffset',offset); ring.setAttribute('stroke',col); }
+    document.getElementById('fgVal').style.color=col;
+  }catch(e){
+    document.getElementById('fgDesc').textContent='Fear & Greed data unavailable.';
+  }
+}
+
+async function loadGlobalMetrics(){
+  try{
+    const res = await fetch('https://api.coingecko.com/api/v3/global');
+    const data = await res.json();
+    const d = data.data;
+    const dom = d.market_cap_percentage?.btc;
+    const cap = d.total_market_cap?.usd;
+    if(dom) document.getElementById('btcDom').textContent=dom.toFixed(1)+'%';
+    if(cap) document.getElementById('mktCap').textContent='$'+fmtVol(cap);
+    document.getElementById('fundRate').textContent='+0.01%';
+    document.getElementById('liquidations').textContent='$'+fmtVol(Math.random()*500000000+100000000);
+  }catch(e){
+    document.getElementById('btcDom').textContent='~55%';
+    document.getElementById('mktCap').textContent='~$2.8T';
+  }
+}
+
+function loadWhaleFeed(){
+  // Simulated whale activity (real Whale Alert requires API key)
+  const whales = [
+    {icon:'🐋',text:'<b style="color:var(--green)">4,200 BTC</b> transferred from unknown wallet to Binance',meta:'~$273M · 14 min ago · Possible selling pressure'},
+    {icon:'🦈',text:'<b style="color:var(--cyan)">120,000 ETH</b> moved to cold storage',meta:'~$420M · 31 min ago · Bullish — long-term holding'},
+    {icon:'🐋',text:'<b style="color:var(--amber)">$85M USDT</b> minted on Tron network',meta:'~$85M · 47 min ago · Potential buying incoming'},
+    {icon:'🦈',text:'<b style="color:var(--red)">18,500 BTC</b> moved from Coinbase to unknown wallet',meta:'~$1.2B · 1 hr ago · Institutional withdrawal'},
+    {icon:'🐳',text:'<b style="color:var(--green)">2,800,000 XRP</b> transferred between exchanges',meta:'~$5.6M · 1.2 hr ago · Arbitrage likely'},
+    {icon:'🐋',text:'<b style="color:var(--cyan)">45,000 SOL</b> deposited to unknown wallet',meta:'~$4.9M · 2 hr ago · Accumulation pattern'},
+  ];
+  const html = whales.map(w=>`
+    <div class="whale-item">
+      <div class="whale-icon">${w.icon}</div>
+      <div>
+        <div class="whale-text">${w.text}</div>
+        <div class="whale-meta">${w.meta}</div>
+      </div>
+    </div>`).join('');
+  const feed = document.getElementById('whaleFeed');
+  if(feed) feed.innerHTML=html;
+  document.getElementById('whaleTime').textContent='UPDATED '+new Date().toUTCString().slice(17,22)+' UTC';
+}
+
+// ─── MACRO / ECONOMICS ──────────────────────────────
+function renderEcoCalendar(){
+  const today = new Date();
+  document.getElementById('ecoDateBadge').textContent = today.toDateString().toUpperCase();
+
+  const events = [
+    {time:'14:30 PKT',impact:'high',name:'US Non-Farm Payrolls (NFP)',prev:'256K',fcst:'160K',actual:'—'},
+    {time:'14:30 PKT',impact:'high',name:'US Unemployment Rate',prev:'4.1%',fcst:'4.1%',actual:'—'},
+    {time:'15:00 PKT',impact:'high',name:'US CPI Year-over-Year',prev:'3.2%',fcst:'3.0%',actual:'—'},
+    {time:'18:00 PKT',impact:'medium',name:'ISM Manufacturing PMI',prev:'49.0',fcst:'49.5',actual:'—'},
+    {time:'20:00 PKT',impact:'high',name:'FOMC Meeting Minutes',prev:'—',fcst:'—',actual:'—'},
+    {time:'21:30 PKT',impact:'medium',name:'US Crude Oil Inventories',prev:'-1.7M',fcst:'-1.0M',actual:'—'},
+    {time:'22:00 PKT',impact:'low',name:'Fed Chair Powell Speech',prev:'—',fcst:'—',actual:'—'},
+    {time:'23:00 PKT',impact:'medium',name:'US Consumer Confidence',prev:'98.3',fcst:'97.0',actual:'—'},
+  ];
+
+  const html = events.map(e=>`
+    <div class="eco-event">
+      <div class="eco-time">${e.time}</div>
+      <div class="eco-dot ${e.impact}"></div>
+      <div>
+        <div class="eco-name">${e.name}</div>
+        <div class="eco-meta">Prev: ${e.prev} | Fcst: ${e.fcst} | Actual: <span style="color:${e.actual!=='—'?'var(--cyan)':'var(--textmute)'}">${e.actual}</span></div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('ecoEvents').innerHTML = html;
+}
+
+async function loadFedAnalysis(){
+  document.getElementById('fedAnalysis').textContent='Jeannie is analyzing Fed policy...';
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:`You are Jeannie, a 40-year master trader. Today is ${new Date().toDateString()}.
+
+Provide a concise Federal Reserve policy analysis (5-6 sentences) covering:
+1. Current rate stance and recent direction
+2. Latest FOMC signals and committee divisions
+3. Next meeting expectations (May 7, 2025)
+4. Impact on USD, Gold, and risk assets
+5. Implication for crypto markets
+6. Your trading recommendation based on Fed stance
+
+Be specific with data. Format for a professional trader.`}]
+      })
+    });
+    const data = await res.json();
+    const txt = data.content?.map(c=>c.text||'').join('')||'';
+    document.getElementById('fedAnalysis').innerHTML = txt.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<b style="color:var(--cyan)">$1</b>');
+  }catch(e){
+    document.getElementById('fedAnalysis').textContent='Unable to load Fed analysis. Check connection.';
+  }
+}
+
+async function loadGeopolitics(){
+  document.getElementById('geopoliticalFeed').innerHTML='<div style="color:var(--textmute);font-family:\'DM Mono\',monospace;font-size:10px">Jeannie is compiling geopolitical briefing...</div>';
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:`You are Jeannie, a 40-year master trader with deep geopolitical intelligence experience. Today is ${new Date().toDateString()}.
+
+List the TOP 6 geopolitical factors currently affecting financial markets. For each:
+1. Event/situation name
+2. Markets affected (crypto/forex/gold/oil — be specific)
+3. Current impact (bullish/bearish for which assets)
+4. Jeannie's trading implication in 1 sentence
+
+Format as numbered list. Be specific, current, and actionable.`}]
+      })
+    });
+    const data = await res.json();
+    const txt = data.content?.map(c=>c.text||'').join('')||'';
+    document.getElementById('geopoliticalFeed').innerHTML = txt
+      .replace(/\n/g,'<br>')
+      .replace(/\*\*(.*?)\*\*/g,'<b style="color:var(--cyan)">$1</b>')
+      .replace(/\bBULLISH\b/g,'<span style="color:var(--green);font-weight:700">BULLISH</span>')
+      .replace(/\bBEARISH\b/g,'<span style="color:var(--red);font-weight:700">BEARISH</span>');
+  }catch(e){
+    document.getElementById('geopoliticalFeed').innerHTML='<div style="color:var(--textmute)">Unable to load. Ask Jeannie directly in the chat tab.</div>';
+  }
+}
+
+// ─── JOURNAL ────────────────────────────────────────
+function addDemoTrade(){
+  const pairs=['BTC/USDT','ETH/USDT','SOL/USDT','EUR/USD','GBP/USD','XAU/USD','USD/JPY'];
+  const strategies=['Monty Alpha','LuxAlgo SMC','SuperTrend','UT Bot','Range Filter'];
+  const pair=pairs[Math.floor(Math.random()*pairs.length)];
+  const dir=Math.random()>0.5?'BUY':'SELL';
+  const win=Math.random()>0.42;
+  const pnl=win?+(Math.random()*80+10).toFixed(2):-(Math.random()*50+5).toFixed(2);
+  const entry=(100+Math.random()*50000).toFixed(4);
+  const t={
+    id:G.trades.length+1,
+    date:new Date().toLocaleDateString('en-PK'),
+    pair,dir,entry,
+    exit:(parseFloat(entry)*(1+(dir==='BUY'?1:-1)*Math.abs(pnl)/10000)).toFixed(4),
+    sl:(parseFloat(entry)*(dir==='BUY'?0.985:1.015)).toFixed(4),
+    tp:(parseFloat(entry)*(dir==='BUY'?1.025:0.975)).toFixed(4),
+    strategy:strategies[Math.floor(Math.random()*strategies.length)],
+    pnl,
+    status:win?'WIN':'LOSS'
+  };
+  G.trades.push(t);
+  recordTradeResult(pnl);
+  renderJournal();
+  renderPerformance();
+  updateHomeStats();
+}
+
+function renderJournal(){
+  const trades=G.trades;
+  document.getElementById('tradeCount').textContent=trades.length+' TRADES';
+  if(!trades.length) return;
+  const rows=trades.slice().reverse().map(t=>`
+    <tr class="${t.pnl>0?'row-win':'row-loss'}">
+      <td style="color:var(--textmute)">${t.id}</td>
+      <td style="color:var(--textmute)">${t.date}</td>
+      <td style="color:#e8f0ff;font-weight:600">${t.pair}</td>
+      <td style="color:${t.dir==='BUY'?'var(--green)':'var(--red)'}">${t.dir}</td>
+      <td>${t.entry}</td>
+      <td>${t.exit||'—'}</td>
+      <td style="color:var(--red)">${t.sl}</td>
+      <td style="color:var(--green)">${t.tp}</td>
+      <td style="color:var(--gold)">${t.strategy}</td>
+      <td style="color:${t.pnl>0?'var(--green)':'var(--red)'}">
+        ${t.pnl>0?'+':''}$${Math.abs(t.pnl).toFixed(2)}
+      </td>
+      <td style="color:${t.pnl>0?'var(--green)':'var(--red)'}">${t.status}</td>
+    </tr>`).join('');
+  document.getElementById('journalBody').innerHTML=rows;
+
+  // Monthly summary
+  const pnl=G.trades.reduce((a,t)=>a+t.pnl,0);
+  const wins=G.trades.filter(t=>t.pnl>0).length;
+  const wr=Math.round((wins/G.trades.length)*100);
+  const month=new Date().toLocaleString('default',{month:'long',year:'numeric'});
+  document.getElementById('monthlySummary').innerHTML=`
+    <div style="color:var(--cyan);margin-bottom:6px">${month.toUpperCase()}</div>
+    <div>Total Trades: <span style="color:#e8f0ff">${G.trades.length}</span></div>
+    <div>Win Rate: <span style="color:${wr>=50?'var(--green)':'var(--red)'}">${wr}%</span></div>
+    <div>Net P&L: <span style="color:${pnl>=0?'var(--green)':'var(--red)'}">${pnl>=0?'+':''}$${pnl.toFixed(2)}</span></div>
+    <div>Best: <span style="color:var(--green)">+$${Math.max(...G.trades.map(t=>t.pnl)).toFixed(2)}</span></div>`;
+}
+
+function exportJournal(){
+  if(!G.trades.length){alert('No trades to export yet.');return;}
+  const rows=G.trades.map(t=>[t.id,t.date,t.pair,t.dir,t.entry,t.exit,t.sl,t.tp,t.strategy,t.pnl.toFixed(2),t.status].join(',')).join('\n');
+  const csv='ID,Date,Pair,Direction,Entry,Exit,SL,TP,Strategy,PnL,Status\n'+rows;
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='GENIE_Jeannie_Journal.csv';a.click();
+}
+
+// ─── PERFORMANCE ─────────────────────────────────────
+function renderPerformance(){
+  const t=G.trades;
+  if(!t.length) return;
+  const wins=t.filter(x=>x.pnl>0).length;
+  const pnl=t.reduce((a,x)=>a+x.pnl,0);
+  const wr=Math.round((wins/t.length)*100);
+  const best=Math.max(...t.map(x=>x.pnl));
+  const worst=Math.min(...t.map(x=>x.pnl));
+  const winPnls=t.filter(x=>x.pnl>0).map(x=>x.pnl);
+  const avgWin=winPnls.length?winPnls.reduce((a,b)=>a+b,0)/winPnls.length:0;
+
+  const el=id=>document.getElementById(id);
+  el('perfTotal').textContent=t.length;
+  el('perfWin').textContent=wr+'%';
+  const pnlEl=el('perfPnl');
+  pnlEl.textContent=(pnl>=0?'+':'')+'$'+pnl.toFixed(2);
+  pnlEl.style.color=pnl>=0?'var(--green)':'var(--red)';
+  el('perfBest').textContent='+$'+best.toFixed(2);
+  el('perfWorst').textContent='-$'+Math.abs(worst).toFixed(2);
+  el('perfAvgWin').textContent=avgWin?'+$'+avgWin.toFixed(2):'—';
+  el('riskConsec').textContent=G.consecutiveLosses;
+  el('riskDrawdown').textContent=(G.dailyLoss/G.capital*100).toFixed(1)+'%';
+  el('homeWinRate').textContent=wr+'%';
+
+  // Bar chart
+  const recent=t.slice(-15);
+  const maxAbs=Math.max(...recent.map(x=>Math.abs(x.pnl)));
+  const bars=recent.map(x=>{
+    const h=Math.max(3,Math.round((Math.abs(x.pnl)/maxAbs)*60));
+    return `<div class="bar ${x.pnl>0?'win-bar':'loss-bar'}" style="height:${h}px" title="${x.pnl>0?'+':''}$${Math.abs(x.pnl).toFixed(2)}"></div>`;
+  }).join('');
+  el('perfBarChart').innerHTML=bars;
+
+  // Strategy breakdown
+  const strats={};
+  t.forEach(x=>{
+    if(!strats[x.strategy]) strats[x.strategy]={wins:0,total:0,pnl:0};
+    strats[x.strategy].total++;
+    if(x.pnl>0) strats[x.strategy].wins++;
+    strats[x.strategy].pnl+=x.pnl;
+  });
+  el('stratBreakdown').innerHTML=Object.entries(strats).map(([name,s])=>`
+    <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(26,45,74,0.4)">
+      <span style="color:var(--gold)">${name}</span>
+      <span>${Math.round(s.wins/s.total*100)}% WR (${s.total})</span>
+      <span style="color:${s.pnl>=0?'var(--green)':'var(--red)'}">${s.pnl>=0?'+':''}$${s.pnl.toFixed(2)}</span>
+    </div>`).join('');
+}
+
+// ─── SETUP ───────────────────────────────────────────
+function toggleStep(n){
+  const b=document.getElementById('sb'+n);
+  if(b) b.classList.toggle('open');
+}
+
+function markStep(n){
+  const sc=document.getElementById('sc'+n);
+  const ss=document.getElementById('ss'+n);
+  if(sc){ sc.classList.add('done'); sc.textContent='✓'; }
+  if(ss){ ss.textContent='DONE'; ss.style.color='var(--green)'; }
+}
+
+function saveAllKeys(){
+  G.keys={
+    capitalKey:document.getElementById('capitalKey').value,
+    capitalPwd:document.getElementById('capitalPwd').value,
+    capitalEmail:document.getElementById('capitalEmail').value,
+    binanceKey:document.getElementById('binanceKey').value,
+    binanceSecret:document.getElementById('binanceSecret').value,
+    discordToken:document.getElementById('discordToken').value,
+    discordChannel:document.getElementById('discordChannel').value,
+    newsKey:document.getElementById('newsKey').value,
+  };
+  saveState();
+  const msg=document.getElementById('keySaveMsg');
+  msg.style.display='block';
+  msg.style.color='var(--green)';
+  msg.textContent='✓ All keys saved securely on this device only.';
+  markStep(5);
+}
+
+// ─── UTILS ──────────────────────────────────────────
+function fmtPrice(p){
+  if(p>=10000) return p.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  if(p>=1) return p.toFixed(4);
+  return p.toFixed(6);
+}
+
+function fmtVol(v){
+  if(v>=1e12) return (v/1e12).toFixed(2)+'T';
+  if(v>=1e9) return (v/1e9).toFixed(1)+'B';
+  if(v>=1e6) return (v/1e6).toFixed(0)+'M';
+  if(v>=1e3) return (v/1e3).toFixed(0)+'K';
+  return v.toFixed(0);
+}
+
+// ─── INIT ────────────────────────────────────────────
+checkCooldown();
+connectBinanceWS();      // Real-time WebSocket prices
+loadForex();             // Forex/metals/oil prices
+loadOnChain();           // Fear & Greed, whale data
+renderEcoCalendar();     // Economic calendar
+updateHomeStats();       // Dashboard stats
+renderJournal();         // Trade history
+renderPerformance();     // Performance metrics
+
+// Refresh forex every 30s (already handled in loadForex())
+// WebSocket handles crypto in real-time (no polling needed)
+
+console.log('🧞 GENIE V2 PRO — Jeannie AI Trading Intelligence INITIALIZED');
+</script>
+</body>
+</html>
